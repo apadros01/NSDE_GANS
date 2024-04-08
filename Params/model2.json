@@ -1,0 +1,17 @@
+{	
+	"initial_noise_size":15,
+	"noise_size":10,
+	"hidden_size":54,
+	"mlp_size":72,
+	"num_layers":3,
+	"generator_lr":0.1,      
+	"discriminator_lr":0.1,
+	"batch_size":96,
+	"steps":3000,
+	"init_mult1":3,
+	"init_mult2":0.5,         
+	"weight_decay":0.01,
+	"swa_step_start":300,
+	"steps_per_print":200,
+	"t_size":6
+}
