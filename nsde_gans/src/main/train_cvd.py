@@ -23,15 +23,15 @@ if __name__ == '__main__':
         print("Warning: CUDA not available; falling back to CPU but this is likely to be very slow.")
 
     X, df_cvd, df_no_cvd = preprocess_data(data_path)
-    ts = torch.linspace(0, t_size - 1, t_size, device=device)
+    ts = torch.linspace(0, t_size - 1, t_size).to(device)
     data_size = X.shape[1]
     
     # dataloader
-    ys_coeffs = torch.from_numpy(X)
-    ys_coeffs = ys_coeffs.to(torch.float32)
-    ys_coeffs = torch.reshape(ys_coeffs,(X.shape[0],1,X.shape[1]))
-    dataset = torch.utils.data.TensorDataset(ys_coeffs)
-    train_dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    ys_coeffs = torch.from_numpy(X).to(device)
+    ys_coeffs = ys_coeffs.to(torch.float32).to(device)
+    ys_coeffs = torch.reshape(ys_coeffs,(X.shape[0],1,X.shape[1])).to(device)
+    dataset = torch.utils.data.TensorDataset(ys_coeffs).to(device)
+    train_dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True).to(device)
     infinite_train_dataloader = (elem for it in iter(lambda: train_dataloader, None) for elem in it)
     # Models
     generator = Generator(data_size, initial_noise_size, noise_size, hidden_size, mlp_size, num_layers+1).to(device)
