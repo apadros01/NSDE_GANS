@@ -41,6 +41,20 @@ if __name__ == '__main__':
     averaged_generator = swa_utils.AveragedModel(generator)
     averaged_discriminator = swa_utils.AveragedModel(discriminator)
 
+    # Picking a good initialisation is important!
+    # In this case these were picked by making the parameters for the t=0 part of the generator be roughly the right
+    # size that the untrained t=0 distribution has a similar variance to the t=0 data distribution.
+    # Then the func parameters were adjusted so that the t>0 distribution looked like it had about the right variance.
+    # What we're doing here is very crude -- one can definitely imagine smarter ways of doing things.
+    # (e.g. pretraining the t=0 distribution)
+    # with torch.no_grad():
+    #     for param in generator._initial.parameters():
+    #         param *= init_mult1
+    #     for param in generator._func.parameters():
+    #         param *= init_mult2
+
+
+
     # Optimisers. Adadelta turns out to be a much better choice than SGD or Adam, interestingly.
     generator_optimiser = torch.optim.Adadelta(generator.parameters(), lr=generator_lr, weight_decay=weight_decay)
     discriminator_optimiser = torch.optim.Adadelta(discriminator.parameters(), lr=discriminator_lr,
