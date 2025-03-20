@@ -101,15 +101,15 @@ if __name__ == '__main__':
                             f"Loss (averaged): {total_averaged_loss:.4f}")
             else:
                 print(f"Step: {step:3} Loss (unaveraged): {total_unaveraged_loss:.4f}")
-        if step % 500 == 0 or step == steps - 1:
-            df_synt = synthtetic_dataset(averaged_generator,ts,size=500,df=df_cvd.iloc[:,1:27])
-            print(fidelity(df_cvd.iloc[:,1:27], df_synt, k=2, c=10).agg('mean'))
+        # if step % 500 == 0 or step == steps - 1:
+        #     df_synt = synthtetic_dataset(averaged_generator,ts,size=500,df=df_cvd.iloc[:,1:27])
+    #         print(fidelity(df_cvd.iloc[:,1:27], df_synt, k=2, c=10).agg('mean'))
             
-    generator.load_state_dict(averaged_generator.module.state_dict())
-    discriminator.load_state_dict(averaged_discriminator.module.state_dict())
+    # generator.load_state_dict(averaged_generator.module.state_dict())
+    # discriminator.load_state_dict(averaged_discriminator.module.state_dict())
 
-    df_synt = synthtetic_dataset(generator = generator, ts = ts, size=500, df=df_no_cvd.iloc[:,1:27])
-    results = fidelity(df_no_cvd.iloc[:,1:27], df_synt, k=2, c=10).agg('mean')
-    print(results)
+    # df_synt = synthtetic_dataset(generator = generator, ts = ts, size=500, df=df_no_cvd.iloc[:,1:27])
+    # results = fidelity(df_no_cvd.iloc[:,1:27], df_synt, k=2, c=10).agg('mean')
+    # print(results)
 
 
